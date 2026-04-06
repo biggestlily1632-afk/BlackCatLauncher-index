@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黑貓啟動器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', '微軟正黑體', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        /* 導航欄 */
+        nav {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #4ade80;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            gap: 0.5rem;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: #4ade80;
+        }
+
+        /* Hero 部分 */
+        .hero {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(45, 45, 45, 0.95) 100%), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23000" width="1200" height="600"/></svg>');
+            background-size: cover;
+            background-position: center;
+            padding: 8rem 2rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 600px;
+            gap: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(74, 222, 128, 0.5);
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #ccc;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            color: #000;
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(74, 222, 128, 0.3);
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 222, 128, 0.5);
+        }
+
+        .cta-button:active {
+            transform: translateY(-1px);
+        }
+
+        /* 特色介紹部分 */
+        .features {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #4ade80;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(40, 40, 40, 0.8);
+            border: 1px solid #4ade80;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(74, 222, 128, 0.2);
+            border-color: #22c55e;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: #4ade80;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: #bbb;
+            line-height: 1.8;
+        }
+
+        /* 關於部分 */
+        .about {
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9) 0%, rgba(30, 30, 30, 0.9) 100%);
+            padding: 4rem 2rem;
+            margin: 3rem 0;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about h2 {
+            font-size: 2.5rem;
+            color: #4ade80;
+            margin-bottom: 1.5rem;
+        }
+
+        .about p {
+            color: #ccc;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        /* 下載部分 */
+        .download {
+            padding: 4rem 2rem;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .download h2 {
+            font-size: 2.5rem;
+            color: #4ade80;
+            margin-bottom: 2rem;
+        }
+
+        .download-options {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .download-btn {
+            background: rgba(74, 222, 128, 0.1);
+            border: 2px solid #4ade80;
+            color: #4ade80;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: #4ade80;
+            color: #000;
+        }
+
+        /* 聯絡部分 */
+        .contact {
+            background: rgba(40, 40, 40, 0.8);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 2px solid #4ade80;
+        }
+
+        .contact h2 {
+            color: #4ade80;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .contact-item h3 {
+            color: #4ade80;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item p {
+            color: #bbb;
+        }
+
+        /* 頁腳 */
+        footer {
+            background: rgba(0, 0, 0, 0.95);
+            text-align: center;
+            padding: 2rem;
+            border-top: 2px solid #4ade80;
+            color: #888;
+        }
+
+        /* 動畫 */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .nav-menu {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .download-options {
+                gap: 1rem;
+            }
+
+            .contact-info {
+                gap: 1.5rem;
+            }
+
+            .features h2,
+            .download h2,
+            .about h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav>
+        <div class="logo">
+            黑貓啟動器
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#home">首頁</a></li>
+            <li><a href="#download">下載</a></li>
+            <li><a href="#about">關於</a></li>
+            <li><a href="#contact">聯絡客服</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero 部分 -->
+    <section class="hero" id="home">
+        <h1>黑貓啟動器</h1>
+        <p>由乙級黑貓製作的Minecraft 啟動器</p>
+        <button class="cta-button">點我下載</button>
+    </section>
+
+    <!-- 特色介紹 -->
+    <section class="features">
+        <h2>核心功能</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>自由調整記憶體</h3>
+                <p>根據需求自訂最低與最高記憶體配置，讓遊戲運行更流暢。</p>
+            </div>
+            <div class="feature-card">
+                <h3>支援 Modrinth</h3>
+                <p>直接搜尋並安裝模組、光影、材質包，一鍵完成。</p>
+            </div>
+            <div class="feature-card">
+                <h3>自動更新</h3>
+                <p>啟動器會自動檢查並更新至最新版本，無需手動操作。</p>
+            </div>
+            <div class="feature-card">
+                <h3>桌面捷徑</h3>
+                <p>一鍵建立桌面捷徑快速啟動遊戲，方便快捷。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 關於部分 -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <div>
+                <h2>關於黑貓啟動器</h2>
+                <p>黑貓啟動器是一款專為 Minecraft 玩家設計的現代化遊戲啟動平台。我們致力於提供最穩定、最快速、最便捷的遊戲體驗。</p>
+                <p>無論你是新手玩家還是資深玩家，黑貓啟動器都能為你提供完美的遊戲環境。我們不斷更新和改進，確保你總是能享受到最新的功能。</p>
+            </div>
+            <div>
+                <h2>為什麼選擇我們？</h2>
+                <p>✅ 簡易UI</p>
+                <p>✅ 完全免費</p>
+                <p>✅ 定期更新和維護</p>
+                <p>✅ 專業客服支持</p>
+                <p>✅ 支持所有 Minecraft 版本</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 下載部分 -->
+    <section class="download" id="download">
+        <h2>立即下載</h2>
+        <div class="download-options">
+            <button class="download-btn">Windows 版本</button>
+            <button class="download-btn">macOS 版本</button>
+            <button class="download-btn">Linux 版本</button>
+        </div>
+        <button class="cta-button">點我下載</button>
+    </section>
+
+    <!-- 聯絡部分 -->
+    <section class="contact" id="contact">
+        <h2>聯絡客服</h2>
+        <div class="contact-info">
+            <div class="contact-item">
+                <h3>📧 郵件</h3>
+                <p>biggestLily1632@gmail.com</p>
+            </div>
+            <div class="contact-item">
+                <h3>💬 Discord</h3>
+                <p>加入我們的社群</p>
+            </div>
+            <div class="contact-item">
+                <h3>🌐 網站</h3>
+                <p>www.blackcatlauncher.com</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁腳 -->
+    <footer>
+        <p>版權所有©️2026 乙級黑貓</p>
+        <p>網站域名：Blackcatlauncher.com</p>
+    </footer>
+</body>
+</html>
